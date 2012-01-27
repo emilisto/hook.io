@@ -21,25 +21,26 @@ var hook1 = new Hook({
  ]
 });
 
-hook1.on('hook::ready', function() {
 
-  var counter = 0;
-  hook1.on('*::hello', function(){
-    console.log('got hello');
-    counter++;
-    if (counter >= 3) {
-      hook1.kill('client-hook', function(err){
-        
-        if (err) {
-          console.log(err);
-        }
-        setTimeout(function(){
-          hook1.start();
-        }, 5000);
-      });
-    }
-  });
-  
+var counter = 0;
+hook1.on('hook::ready', function() {
+  counter = 0;
+});
+
+hook1.on('*::hello', function(){
+  console.log('got hello');
+  counter++;
+  if (counter >= 3) {
+    hook1.kill('client-hook', function(err){
+
+      if (err) {
+        console.log(err);
+      }
+      setTimeout(function(){
+        hook1.start();
+      }, 5000);
+    });
+  }
 });
 
 hook1.start();
